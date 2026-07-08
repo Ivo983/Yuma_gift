@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank you, Maryam</title>
+
+  <style>
+    :root {
+      --bg: #120608;
+      --card: rgba(255,255,255,0.10);
+      --card2: rgba(255,255,255,0.16);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.76);
+      --line: rgba(255,255,255,0.20);
+      --accent: #e63946;
+      --accent2: #ff6b75;
+      --shadow: 0 24px 70px rgba(0,0,0,0.38);
+      --radius: 28px;
+      --paper: #ffffff;
+      --paperText: #21080b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(230,57,70,0.28), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.14), transparent 28rem),
+        radial-gradient(circle at 70% 15%, rgba(255,107,117,0.16), transparent 26rem),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: min(1050px, calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(18,6,8,0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 14px;
+    }
+
+    .filename {
+      font-family: "Courier New", monospace;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a,
+    .print-btn {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: grid;
+      place-items: center;
+      padding: 70px 0;
+    }
+
+    .hero-card {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-top: 1px solid rgba(230,57,70,0.65);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(230,57,70,0.08));
+      padding: clamp(28px, 6vw, 74px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(circle at 80% 20%, rgba(230,57,70,0.36), transparent 18rem);
+      pointer-events: none;
+    }
+
+    .kicker {
+      font-family: "Courier New", monospace;
+      color: var(--accent2);
+      font-size: 14px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: 0.94;
+      letter-spacing: -0.075em;
+      margin: 0 0 28px;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: clamp(17px, 2.1vw, 23px);
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 790px;
+      margin: 0 0 18px;
+      position: relative;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+      margin-top: 34px;
+    }
+
+    .primary {
+      border: 0;
+      color: #ffffff;
+      background: var(--accent);
+      padding: 14px 19px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 40px rgba(230,57,70,0.28);
+      text-decoration: none;
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      padding: 14px 19px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    section {
+      padding: 78px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5.4vw, 66px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      margin: 0 0 18px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 760px;
+      margin-bottom: 32px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius);
+      background: var(--card);
+      padding: clamp(24px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h3 {
+      font-size: clamp(25px, 3vw, 38px);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin: 0 0 18px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 18px;
+      margin: 0 0 16px;
+    }
+
+    .support-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .support-item {
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 94px;
+      display: flex;
+      align-items: center;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .support-item:hover {
+      transform: translateY(-3px);
+      background: var(--card2);
+      border-color: rgba(230,57,70,0.72);
+    }
+
+    .support-item p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 22px;
+      background: var(--card);
+      padding: 22px;
+      min-height: 190px;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      background: var(--card2);
+      border-color: rgba(230,57,70,0.72);
+    }
+
+    .card .num {
+      font-family: "Courier New", monospace;
+      color: var(--accent2);
+      font-size: 13px;
+      margin-bottom: 46px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 17px;
+    }
+
+    .letter {
+      background: var(--paper);
+      color: var(--paperText);
+      border-radius: var(--radius);
+      border-top: 8px solid var(--accent);
+      padding: clamp(28px, 5vw, 62px);
+      box-shadow: var(--shadow);
+      line-height: 1.82;
+      font-size: clamp(17px, 2vw, 20px);
+      max-width: 880px;
+    }
+
+    .letter h2 {
+      margin: 0 0 28px;
+      letter-spacing: -0.045em;
+      font-size: clamp(34px, 4.8vw, 58px);
+      line-height: 1;
+    }
+
+    .letter p {
+      margin: 0 0 18px;
+    }
+
+    .signature {
+      margin-top: 34px;
+      font-size: 24px;
+    }
+
+    .final {
+      border: 1px solid rgba(255,255,255,0.18);
+      border-top: 1px solid rgba(230,57,70,0.65);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(230,57,70,0.08));
+      padding: clamp(28px, 5vw, 54px);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .final p {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.65;
+      max-width: 780px;
+      margin: 18px auto 0;
+    }
+
+    .footer {
+      padding: 44px 0 70px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      font-family: "Courier New", monospace;
+    }
+
+    @media (max-width: 850px) {
+      .split,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: clamp(48px, 16vw, 82px);
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .topbar,
+      .button-row {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 20px 0;
+      }
+
+      .hero-card,
+      .panel,
+      .card,
+      .support-item,
+      .final {
+        background: white;
+        color: black;
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+
+      .letter {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+
+      .hero p,
+      .panel p,
+      .section-intro,
+      .final p,
+      .footer {
+        color: black;
+      }
+
+      section {
+        page-break-inside: avoid;
+        padding: 32px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="page topbar-inner">
+      <div class="filename">Thank you and I love you <3</div>
+      <div class="nav">
+        <a href="#support">thank you</a>
+        <a href="#meant">what it meant</a>
+        <a href="#letter">letter</a>
+        <button class="print-btn" onclick="window.print()">print</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="page">
+    <section class="hero" id="top">
+      <div class="hero-card">
+        <div class="kicker">a thank you for the test days</div>
+        <h1>Maryam, thank you.</h1>
+
+        <p>
+          I wanted to make this because you helped me a lot during my tests.
+        </p>
+
+        <p>
+          Every time I was about to write one, you told me you believed in me and that I could do it.
+          It sounds simple, but it actually helped me calm down and feel more confident.
+        </p>
+
+        <p>
+          And whenever I did good, you always said good job. That meant a lot to me.
+        </p>
+
+        <div class="button-row">
+          <a class="primary" href="#letter">Read the message</a>
+          <a class="secondary" href="#support">What I mean</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
+      <h2 class="section-title">What I wanted to thank you for.</h2>
+      <p class="section-intro">
+        I know it probably felt like you were just sending normal messages, but they actually helped me a lot.
+      </p>
+
+      <div class="split">
+        <div class="panel">
+          <h3>You made the test period easier for me.</h3>
+          <p>
+            I was stressed a lot, and sometimes I was overthinking before writing a test.
+            Your messages helped me calm down and believe in myself more.
+          </p>
+          <p>
+            It was not about doing anything huge. It was just nice knowing that someone believed in me and wanted me to do good.
+          </p>
+        </div>
+
+        <div class="support-list">
+          <div class="support-item">
+            <p>You always told me you believed in me.</p>
+          </div>
+          <div class="support-item">
+            <p>You reminded me that I could do it when I was stressed.</p>
+          </div>
+          <div class="support-item">
+            <p>You made me feel more confident before tests.</p>
+          </div>
+          <div class="support-item">
+            <p>When I did good, you were happy for me and said good job.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="meant">
+      <h2 class="section-title">What it meant to me.</h2>
+      <p class="section-intro">
+        These are the main things I wanted to thank you for.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="num">01</div>
+          <p>You believed in me when I was stressed.</p>
+        </div>
+
+        <div class="card">
+          <div class="num">02</div>
+          <p>You reminded me that I could do it.</p>
+        </div>
+
+        <div class="card">
+          <div class="num">03</div>
+          <p>You made me feel less alone with the pressure.</p>
+        </div>
+
+        <div class="card">
+          <div class="num">04</div>
+          <p>You were happy for me when I did good.</p>
+        </div>
+
+        <div class="card">
+          <div class="num">05</div>
+          <p>You helped me mentally more than you probably realized.</p>
+        </div>
+
+        <div class="card">
+          <div class="num">06</div>
+          <p>You were just a really good friend during a stressful time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="letter">
+      <h2 class="section-title">The actual message.</h2>
+      <p class="section-intro">
+        Just a normal thank you, because I wanted to say it properly.
+      </p>
+
+      <div class="letter">
+        <h2>Dear Maryam,</h2>
+
+        <p>
+          I wanted to make this because you helped me a lot during my tests, and I do not think I thanked you properly enough.
+        </p>
+
+        <p>
+          Every time I had to write a test, you told me that you believed in me and that I could do it.
+          I know those are simple messages, but they actually helped me more than you probably realized.
+        </p>
+
+        <p>
+          When I was stressed or overthinking, it made me feel calmer knowing that someone believed in me.
+          It made the test period feel less heavy.
+        </p>
+
+        <p>
+          And when I did good, you always told me good job. That also meant a lot, because it felt like you were genuinely happy for me.
+        </p>
+
+        <p>
+          So thank you for supporting me, for encouraging me, and for being there while I was dealing with all of that stress.
+          You made it easier for me, and I really appreciate it.
+        </p>
+
+        <div class="signature">— Ivo</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="final">
+        <h2 class="section-title">Thank you.</h2>
+        <p>
+          Your support helped more than you probably thought.
+          I appreciate you a lot.
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      made by Ivo · for Maryam
+    </div>
+  </main>
+</body>
+</html>
